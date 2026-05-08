@@ -179,7 +179,14 @@ export default function App() {
             </h2>
           </motion.div>
 
-          <motion.div variants={fadeIn} className="grid md:grid-cols-2 gap-8 mb-12 relative">
+          <motion.div 
+            variants={fadeIn} 
+            className="grid md:grid-cols-2 gap-8 mb-12 relative"
+            onMouseEnter={() => setIsLabHovered(true)}
+            onMouseLeave={() => setIsLabHovered(false)}
+            onTouchStart={() => setIsLabHovered(true)}
+            onTouchEnd={() => setIsLabHovered(false)}
+          >
             {/* Connection Line behind images */}
             <div className="absolute top-1/2 left-1/4 right-1/4 h-0.5 bg-neonCyan/20 -z-10 hidden md:block">
               <motion.div 
@@ -190,11 +197,7 @@ export default function App() {
               />
             </div>
 
-            <div 
-              className="space-y-4 cursor-crosshair"
-              onMouseEnter={() => setIsLabHovered(true)}
-              onMouseLeave={() => setIsLabHovered(false)}
-            >
+            <div className="space-y-4 cursor-crosshair">
               <div className={`lab-slate-card overflow-hidden relative transition-all duration-500 ${isLabHovered ? 'ring-2 ring-neonCyan shadow-[0_0_30px_rgba(34,211,238,0.2)]' : ''}`}>
                 <div className="absolute inset-0 bg-gradient-to-t from-slateBg/80 to-transparent z-10 flex items-end p-4 pointer-events-none opacity-0 group-hover:opacity-100 transition-opacity">
                   <span className="flex items-center gap-2 text-neonCyan font-mono text-xs"><MousePointer2 className="w-3 h-3" /> INTERACT</span>
