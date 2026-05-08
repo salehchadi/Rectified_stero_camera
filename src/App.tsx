@@ -1,8 +1,22 @@
 import { useState } from 'react';
-import { InlineMath, BlockMath } from 'react-katex';
+import katex from 'katex';
 import { motion } from 'framer-motion';
 import 'katex/dist/katex.min.css';
 import { Camera, Layers, Zap, Info, ArrowRight, MousePointer2 } from 'lucide-react';
+
+const MathRenderer = ({ math, block = false }: { math: string, block?: boolean }) => {
+  return (
+    <span 
+      className={block ? "flex justify-center w-full" : "inline-block"}
+      dangerouslySetInnerHTML={{ 
+        __html: katex.renderToString(math, { 
+          displayMode: block, 
+          throwOnError: false 
+        }) 
+      }} 
+    />
+  );
+};
 
 export default function App() {
   const [isLabHovered, setIsLabHovered] = useState(false);
@@ -125,26 +139,26 @@ export default function App() {
 
           <motion.div variants={fadeIn} className="lab-slate-card p-8 md:p-12 max-w-4xl mx-auto shadow-neonCyan/5 hover:shadow-neonCyan/10 transition-shadow duration-500">
             <div className="mb-12 text-2xl text-neonCyan bg-slateBg/40 p-6 rounded border border-slateBorder/50 flex justify-center shadow-inner">
-              <BlockMath math={"E = [t]_{\\times} R"} />
+              <MathRenderer block math={"E = [t]_{\\times} R"} />
             </div>
 
             <div className="grid md:grid-cols-2 gap-12 items-center">
               <div className="text-slate-300 space-y-6">
                 <p className="leading-relaxed">
-                  Where <span className="text-neonCyan font-mono"><InlineMath math="E" /></span> is the Essential Matrix, <span className="text-neonCyan font-mono"><InlineMath math={"[t]_{\\times}"} /></span> is the skew-symmetric matrix of translation,
-                  and <span className="text-neonCyan font-mono"><InlineMath math="R" /></span> is the rotation matrix.
+                  Where <span className="text-neonCyan font-mono"><MathRenderer math="E" /></span> is the Essential Matrix, <span className="text-neonCyan font-mono"><MathRenderer math={"[t]_{\\times}"} /></span> is the skew-symmetric matrix of translation,
+                  and <span className="text-neonCyan font-mono"><MathRenderer math="R" /></span> is the rotation matrix.
                 </p>
                 <div className="bg-slateBg/50 border border-slateBorder p-4 rounded text-sm relative overflow-hidden group">
                   <div className="absolute top-0 left-0 w-1 h-full bg-neonCyan transition-all group-hover:w-2"></div>
                   <p className="pl-2">
-                    Because the KITTI cameras are perfectly parallel, <span className="text-neonCyan font-mono"><InlineMath math="R" /></span> is the Identity matrix,
+                    Because the KITTI cameras are perfectly parallel, <span className="text-neonCyan font-mono"><MathRenderer math="R" /></span> is the Identity matrix,
                     and translation is purely along the X-axis (0.54m).
                   </p>
                 </div>
               </div>
 
               <div className="flex items-center justify-center p-6 bg-slateBg/80 rounded-lg border border-slateBorder/50 font-mono text-lg text-white">
-                <BlockMath math={"E = \\begin{bmatrix} 0 & 0 & 0 \\\\ 0 & 0 & -0.54 \\\\ 0 & 0.54 & 0 \\end{bmatrix}"} />
+                <MathRenderer block math={"E = \\begin{bmatrix} 0 & 0 & 0 \\\\ 0 & 0 & -0.54 \\\\ 0 & 0.54 & 0 \\end{bmatrix}"} />
               </div>
             </div>
           </motion.div>
@@ -270,10 +284,10 @@ export default function App() {
                   The Depth Invariant
                 </p>
                 <div className="text-center py-6 bg-slateBg/40 rounded border border-slateBorder/50 shadow-inner">
-                  <BlockMath math={"Z = \\frac{f \\cdot B}{d}"} />
+                  <MathRenderer block math={"Z = \\frac{f \\cdot B}{d}"} />
                 </div>
                 <p className="text-slate-300 mt-6 leading-relaxed">
-                  Depth (<span className="text-neonCyan font-mono"><InlineMath math="Z" /></span>) is inversely proportional to disparity (<span className="text-neonCyan font-mono"><InlineMath math="d" /></span>).
+                  Depth (<span className="text-neonCyan font-mono"><MathRenderer math="Z" /></span>) is inversely proportional to disparity (<span className="text-neonCyan font-mono"><MathRenderer math="d" /></span>).
                   Using our KITTI constants:
                 </p>
               </motion.div>
@@ -283,7 +297,7 @@ export default function App() {
                   FINAL COMPUTATION <ArrowRight className="w-3 h-3" />
                 </p>
                 <div className="text-2xl font-mono text-white tracking-wider">
-                  <BlockMath math={"Z = \\frac{388.18}{d}"} />
+                  <MathRenderer block math={"Z = \\frac{388.18}{d}"} />
                 </div>
               </motion.div>
             </div>
@@ -324,7 +338,8 @@ export default function App() {
           className="border-t border-slateBorder pt-12 flex flex-col md:flex-row justify-between items-center gap-6"
         >
           <p className="text-slate-600 font-mono text-xs tracking-tighter uppercase">
-            Computer Vision Series // Portfolio Version 1.0.0
+            Computer Vision Series // Portfolio Version 1.0.1
+            <span className="ml-2 text-[10px] text-neonCyan opacity-50">Vercel Fix Deployed</span>
           </p>
           <div className="flex gap-4">
             <div className="w-8 h-8 rounded-full border border-slateBorder flex items-center justify-center text-slate-500 text-xs font-mono hover:bg-slateSurface transition-colors">01</div>
