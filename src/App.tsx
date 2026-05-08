@@ -125,13 +125,13 @@ export default function App() {
 
           <motion.div variants={fadeIn} className="lab-slate-card p-8 md:p-12 max-w-4xl mx-auto shadow-neonCyan/5 hover:shadow-neonCyan/10 transition-shadow duration-500">
             <div className="mb-12 text-2xl text-neonCyan bg-slateBg/40 p-6 rounded border border-slateBorder/50 flex justify-center shadow-inner">
-              <BlockMath math={String.raw`E = [t]_{\times} R`} />
+              <BlockMath math={"E = [t]_{\\times} R"} />
             </div>
 
             <div className="grid md:grid-cols-2 gap-12 items-center">
               <div className="text-slate-300 space-y-6">
                 <p className="leading-relaxed">
-                  Where <span className="text-neonCyan font-mono"><InlineMath math="E" /></span> is the Essential Matrix, <span className="text-neonCyan font-mono"><InlineMath math={String.raw`[t]_{\times}`} /></span> is the skew-symmetric matrix of translation,
+                  Where <span className="text-neonCyan font-mono"><InlineMath math="E" /></span> is the Essential Matrix, <span className="text-neonCyan font-mono"><InlineMath math={"[t]_{\\times}"} /></span> is the skew-symmetric matrix of translation,
                   and <span className="text-neonCyan font-mono"><InlineMath math="R" /></span> is the rotation matrix.
                 </p>
                 <div className="bg-slateBg/50 border border-slateBorder p-4 rounded text-sm relative overflow-hidden group">
@@ -144,7 +144,7 @@ export default function App() {
               </div>
 
               <div className="flex items-center justify-center p-6 bg-slateBg/80 rounded-lg border border-slateBorder/50 font-mono text-lg text-white">
-                <BlockMath math={String.raw`E = \begin{bmatrix} 0 & 0 & 0 \\ 0 & 0 & -0.54 \\ 0 & 0.54 & 0 \end{bmatrix}`} />
+                <BlockMath math={"E = \\begin{bmatrix} 0 & 0 & 0 \\\\ 0 & 0 & -0.54 \\\\ 0 & 0.54 & 0 \\end{bmatrix}"} />
               </div>
             </div>
           </motion.div>
@@ -270,7 +270,7 @@ export default function App() {
                   The Depth Invariant
                 </p>
                 <div className="text-center py-6 bg-slateBg/40 rounded border border-slateBorder/50 shadow-inner">
-                  <BlockMath math={String.raw`Z = \frac{f \cdot B}{d}`} />
+                  <BlockMath math={"Z = \\frac{f \\cdot B}{d}"} />
                 </div>
                 <p className="text-slate-300 mt-6 leading-relaxed">
                   Depth (<span className="text-neonCyan font-mono"><InlineMath math="Z" /></span>) is inversely proportional to disparity (<span className="text-neonCyan font-mono"><InlineMath math="d" /></span>).
@@ -283,7 +283,7 @@ export default function App() {
                   FINAL COMPUTATION <ArrowRight className="w-3 h-3" />
                 </p>
                 <div className="text-2xl font-mono text-white tracking-wider">
-                  <BlockMath math={String.raw`Z = \frac{388.18}{d}`} />
+                  <BlockMath math={"Z = \\frac{388.18}{d}"} />
                 </div>
               </motion.div>
             </div>
