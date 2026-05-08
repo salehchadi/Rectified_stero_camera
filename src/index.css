@@ -1,0 +1,21 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500;700&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  body {
+    @apply bg-slateBg text-slate-300 font-sans antialiased;
+  }
+}
+
+@layer components {
+  .lab-slate-card {
+    @apply bg-slateSurface border-2 border-slateBorder shadow-lg rounded-sm;
+  }
+}
+
+.katex-display {
+  @apply overflow-x-auto overflow-y-hidden py-2;
+}

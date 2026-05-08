@@ -1,0 +1,249 @@
+import React from 'react';
+import { InlineMath, BlockMath } from 'react-katex';
+import { motion } from 'motion/react';
+import 'katex/dist/katex.min.css';
+import { Camera, Layers, Zap, Info, ArrowRight } from 'lucide-react';
+
+export default function App() {
+const fadeIn = {
+initial: { opacity: 0, y: 20 },
+animate: { opacity: 1, y: 0 },
+transition: { duration: 0.6 }
+};
+
+return (
+<div className="min-h-screen bg-grid-slate selection:bg-cyan-500/30">
+    <div className="max-w-6xl mx-auto px-6 py-12 md:py-24">
+        {/* Hero Section */}
+        <header className="mb-24 text-center">
+            <motion.div {...fadeIn}>
+                <h1 className="text-4xl md:text-7xl font-mono font-bold text-cyan-400 mb-6 tracking-tight">
+                    Classical Stereo Vision:<br />
+                    <span className="text-white">From Pixels to Depth</span>
+                </h1>
+                <p className="text-xl md:text-2xl font-mono text-slate-500">
+                    <span className="text-cyan-500 pr-2">&gt;</span>
+                    Executing math-driven depth estimation without deep learning...
+                </p>
+            </motion.div>
+        </header>
+
+        {/* Section 01 // Stereo Setup Parameters */}
+        <section className="mb-32">
+            <div className="flex items-center gap-3 mb-8">
+                <div className="h-0.5 w-12 bg-cyan-500" />
+                <h2
+                    className="text-2xl font-mono font-bold text-cyan-400 uppercase tracking-widest flex items-center gap-2">
+                    <Camera className="w-5 h-5" /> Section 01 // Stereo Setup Parameters
+                </h2>
+            </div>
+
+            <div className="grid md:grid-cols-2 gap-8 mb-12">
+                <div className="space-y-4">
+                    <div className="lab-slate-card overflow-hidden">
+                        <img src="/images/kitti_left_raw.png" alt="Left Camera Raw"
+                            className="w-full opacity-80 hover:opacity-100 transition-opacity"
+                            referrerPolicy="no-referrer" />
+                    </div>
+                    <p className="text-sm font-mono text-slate-500">Left View: Camera 2 (Grayscale)</p>
+                </div>
+                <div className="space-y-4">
+                    <div className="lab-slate-card overflow-hidden">
+                        <img src="/images/kitti_right_raw.png" alt="Right Camera Raw"
+                            className="w-full opacity-80 hover:opacity-100 transition-opacity"
+                            referrerPolicy="no-referrer" />
+                    </div>
+                    <p className="text-sm font-mono text-slate-500">Right View: Camera 3 (Grayscale)</p>
+                </div>
+            </div>
+
+            <div className="lab-slate-card p-8 md:p-12">
+                <div className="grid md:grid-cols-2 gap-12 items-center">
+                    <div>
+                        <h3 className="text-lg font-mono text-cyan-400 mb-4 flex items-center gap-2">
+                            <Zap className="w-4 h-4" /> Calibrated Matrix Configuration
+                        </h3>
+                        <div className="space-y-6 text-slate-300 font-mono">
+                            <div>
+                                <p className="text-xs text-slate-500 uppercase mb-1">Horizontal Displacement</p>
+                                <p className="text-2xl">Baseline (B) = 0.54m</p>
+                            </div>
+                            <div>
+                                <p className="text-xs text-slate-500 uppercase mb-1">Optic Center to Sensor</p>
+                                <p className="text-2xl">Focal Length (f) = 718.856px</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div className="bg-slate-900/50 p-6 rounded border border-slate-700/50">
+                        <p className="text-slate-400 text-sm leading-relaxed italic">
+                            "In the KITTI benchmark, the two monochrome cameras are mounted on the roof of the vehicle.
+                            Knowing these physical constants is the first step in converting binary intensity signals
+                            into a metric coordinate system."
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        {/* Section 02 // Epipolar Geometry */}
+        <section className="mb-32">
+            <div className="flex items-center gap-3 mb-8">
+                <div className="h-0.5 w-12 bg-cyan-500" />
+                <h2
+                    className="text-2xl font-mono font-bold text-cyan-400 uppercase tracking-widest flex items-center gap-2">
+                    <Layers className="w-5 h-5" /> Section 02 // Epipolar Geometry
+                </h2>
+            </div>
+
+            <div className="lab-slate-card p-12 max-w-4xl mx-auto">
+                <div className="mb-12">
+                    <BlockMath math="\mathbf{E} = [\mathbf{t}]_\times \mathbf{R}" />
+                </div>
+
+                <div className="grid md:grid-cols-2 gap-12">
+                    <div className="text-slate-300 space-y-4">
+                        <p>
+                            Where
+                            <InlineMath math="\mathbf{E}" /> is the Essential Matrix,
+                            <InlineMath math="[\mathbf{t}]_\times" /> is the skew-symmetric matrix of translation,
+                            and
+                            <InlineMath math="\mathbf{R}" /> is the rotation matrix.
+                        </p>
+                        <p className="text-sm border-l-2 border-cyan-500/50 pl-4 py-2">
+                            Because the KITTI cameras are perfectly parallel,
+                            <InlineMath math="\mathbf{R}" /> is the Identity matrix,
+                            and translation is purely along the X-axis (0.54m).
+                        </p>
+                    </div>
+
+                    <div className="flex items-center justify-center">
+                        <BlockMath
+                            math="\mathbf{E} = \begin{bmatrix} 0 & 0 & 0 \\ 0 & 0 & -0.54 \\ 0 & 0.54 & 0 \end{bmatrix}" />
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        {/* Section 03 // Interactive Epipolar Lab */}
+        <section className="mb-32">
+            <div className="flex items-center gap-3 mb-8">
+                <div className="h-0.5 w-12 bg-cyan-500" />
+                <h2
+                    className="text-2xl font-mono font-bold text-cyan-400 uppercase tracking-widest flex items-center gap-2">
+                    <Info className="w-5 h-5" /> Section 03 // Interactive Epipolar Lab
+                </h2>
+            </div>
+
+            <div className="grid md:grid-cols-2 gap-8 mb-12">
+                <div className="space-y-4">
+                    <div className="lab-slate-card overflow-hidden">
+                        <img src="/images/kitti_left_markers.png" alt="Left Image with Markers"
+                            className="w-full opacity-90" referrerPolicy="no-referrer" />
+                    </div>
+                    <p className="text-sm font-mono text-slate-500">Step A: Identifying Feature Correspondences</p>
+                </div>
+                <div className="space-y-4">
+                    <div className="lab-slate-card overflow-hidden">
+                        <img src="/images/kitti_right_epipolar_lines.png" alt="Right Image with Epipolar Lines"
+                            className="w-full opacity-90" referrerPolicy="no-referrer" />
+                    </div>
+                    <p className="text-sm font-mono text-slate-500">Step B: Projecting Epipolar Constraints</p>
+                </div>
+            </div>
+
+            <div className="text-center max-w-2xl mx-auto">
+                <p className="text-lg text-slate-300 leading-relaxed">
+                    Because the cameras are <span className="text-white font-semibold">rectified</span>,
+                    a feature found in the left image guarantees its matching feature will lie on the
+                    <span className="text-cyan-400 underline decoration-cyan-400/30 underline-offset-4"> exact same
+                        horizontal line</span> in the right image,
+                    reducing the search from 2D to 1D.
+                </p>
+            </div>
+        </section>
+
+        {/* Section 04 // Rectification & Depth */}
+        <section className="mb-32 pb-24">
+            <div className="flex items-center gap-3 mb-8">
+                <div className="h-0.5 w-12 bg-cyan-500" />
+                <h2
+                    className="text-2xl font-mono font-bold text-cyan-400 uppercase tracking-widest flex items-center gap-2">
+                    <ArrowRight className="w-5 h-5" /> Section 04 // Rectification & Depth
+                </h2>
+            </div>
+
+            <div className="grid lg:grid-cols-2 gap-12 items-start mb-16">
+                <div className="space-y-8">
+                    <div className="lab-slate-card p-8">
+                        <p className="text-slate-400 mb-6 font-mono text-sm uppercase tracking-wider">The Depth
+                            Invariant</p>
+                        <div className="text-center py-4">
+                            <BlockMath math="Z = \frac{f \cdot B}{d}" />
+                        </div>
+                        <p className="text-slate-300 mt-6 leading-relaxed">
+                            Depth (
+                            <InlineMath math="Z" />) is inversely proportional to disparity (
+                            <InlineMath math="d" />).
+                            Objects that move very little between views are far away; objects with high pixel shift are
+                            close.
+                        </p>
+                    </div>
+
+                    <div className="lab-slate-card p-8 border-l-cyan-500 border-l-4">
+                        <p className="text-slate-500 font-mono text-xs mb-2">FINAL CALCULATION</p>
+                        <div className="text-2xl font-mono text-cyan-400">
+                            <BlockMath math="Z = \frac{388.18}{d}" />
+                        </div>
+                    </div>
+                </div>
+
+                <div className="space-y-12">
+                    <div className="space-y-4">
+                        <div className="lab-slate-card overflow-hidden">
+                            <img src="/images/kitti_disparity_heatmap.png" alt="Disparity Map" className="w-full"
+                                referrerPolicy="no-referrer" />
+                        </div>
+                        <div className="flex justify-between items-end">
+                            <p className="text-sm font-mono text-slate-500">Disparity Map (Pixel Shift)</p>
+                            <span
+                                className="text-[10px] text-slate-700 font-mono px-2 py-1 border border-slate-700">MAP_01</span>
+                        </div>
+                    </div>
+
+                    <div className="space-y-4">
+                        <div className="lab-slate-card overflow-hidden">
+                            <img src="/images/kitti_depth_heatmap.png" alt="Depth Map" className="w-full"
+                                referrerPolicy="no-referrer" />
+                        </div>
+                        <div className="flex justify-between items-end">
+                            <p className="text-sm font-mono text-slate-500">Final Computed Depth Map (Meters)</p>
+                            <span
+                                className="text-[10px] text-slate-700 font-mono px-2 py-1 border border-slate-700">MAP_02</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        {/* Footer */}
+        <footer
+            className="border-t border-slate-800 pt-12 flex flex-col md:flex-row justify-between items-center gap-6">
+            <p className="text-slate-600 font-mono text-xs tracking-tighter uppercase">
+                Computer Vision Series // Portfolio Version 1.0.4
+            </p>
+            <div className="flex gap-4">
+                <div
+                    className="w-8 h-8 rounded-full border border-slate-700 flex items-center justify-center text-slate-500 text-xs font-mono">
+                    01</div>
+                <div
+                    className="w-8 h-8 rounded-full border border-cyan-500 flex items-center justify-center text-cyan-500 text-xs font-mono">
+                    02</div>
+                <div
+                    className="w-8 h-8 rounded-full border border-slate-700 flex items-center justify-center text-slate-500 text-xs font-mono">
+                    03</div>
+            </div>
+        </footer>
+    </div>
+</div>
+);
+}
